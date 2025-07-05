@@ -56,7 +56,7 @@ export default function MainPage() {
     if (trailsLoading === false && searched === true) {
       setSearched(false);
     }
-  }, [trailsLoading, searched]);
+  }, [trailsLoading, searched, showMap]);
 
   // 키워드 입력 시 검색 초기화
   useEffect(() => {
@@ -78,7 +78,7 @@ export default function MainPage() {
 
   return (
     <div className="mainContainer">
-      <h1 className="title">등산로 지역별, 산이름, 위치 데이터를 이용한 날씨 API 데이터 정보</h1>
+      <h1 className="title">About Hiking Trail Data</h1>
       
       <SearchFilterSection
         keyword={keyword}

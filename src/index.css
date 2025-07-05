@@ -23,6 +23,9 @@ select{
 .hidden {
   display: none;
 }
+.right{
+  float: right;
+}
 
 /* 공통 css */
 
@@ -153,3 +156,37 @@ select{
   text-align: right;
   margin-bottom: 20px;
 }
+
+.trail-overlay{
+  padding: 10px;
+  background: #fff;
+  border: 1px solid #d1d1d1;
+  border-radius: 5px;
+  position: relative;
+  margin-bottom: 10px;
+
+}
+.trail-overlay::after{
+  content: '▼';
+  display: block;
+  margin: 10px 0;
+  position: absolute;
+  left: 50%;
+  top: 27px;
+  transform: translate(-50%, 0);
+}
+
+.mpaListItem{            
+  padding: 14px 20px;
+  font-weight: bold;
+  user-select: none;
+  background-color: #fbfbfb;
+  border: 1px solid #d1d1d1;
+  cursor: pointer;
+}
+.trailCard{
+  padding: 20px 10px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  border-radius: 10px;
+}            

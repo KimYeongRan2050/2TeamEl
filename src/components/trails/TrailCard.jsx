@@ -22,9 +22,6 @@ function TrailCard(props) {
           props.selectedTrail && props.selectedTrail.id === props.trail.id
             ? "2px solid red"
             : "1px solid gray",
-        padding: "8px",
-        marginBottom: "8px",
-        cursor: "pointer",
       }}
       onClick={handleClick}
     >

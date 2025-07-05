@@ -57,6 +57,16 @@ function TrailList(props) {
     });
   }
 
+  function getTotalDistance(trails) {
+    return trails.reduce((sum, trail) => {
+      const len = parseFloat(trail.properties.sec_len);
+      return sum + (isNaN(len) ? 0 : len);
+    }, 0).toFixed(2); // 소수점 2자리
+  }
+
+
+
+
   return (
     <div className="trailList">
       {sortedMountainNames.length > 0 && (
@@ -65,8 +75,8 @@ function TrailList(props) {
           <select value={sortOption} onChange={handleSortChange}>
             <option value="전체">전체</option>
             <option value="가나다순">가나다순</option>
-            <option value="낮은거리순">낮은거리순</option>
-            <option value="높은거리순">높은거리순</option>
+            <option value="낮은거리순">총 낮은거리순</option>
+            <option value="높은거리순">총 높은거리순</option>
           </select>
         </div>      
         {sortedMountainNames.map((name) => {
@@ -77,17 +87,15 @@ function TrailList(props) {
           const isExpanded = expandedMountain === name;
           return (
             <div key={name} style={{ marginBottom: "12px" }}>
-              <div
-                style={{
-                  cursor: "pointer",
-                  backgroundColor: "#eee",
-                  padding: "8px",
-                  fontWeight: "bold",
-                  userSelect: "none",
-                }}
+              <div 
+                className="mpaListItem"
                 onClick={() => toggleMountain(name)}
               >
-                {name} {isExpanded ? "▲" : "▼"}
+                {name} ({getTotalDistance(trails)} Km) {isExpanded ? (
+                  <div className="right up">▲</div>
+                ) : (
+                  <div className="right down">▼</div>
+                )}
               </div>
               {isExpanded && (
                 <div
@@ -95,8 +103,8 @@ function TrailList(props) {
                     padding: "16px",
                     marginTop: "8px",
                     display: "grid",
-                    gridTemplateColumns: "repeat(auto-fill, minmax(100px, 1fr))",
-                    gap: "12px",
+                    gridTemplateColumns: "repeat(auto-fill, minmax(114px, 1fr))",
+                    gap: "10px",
                   }}
                 >
                   {trails.map((trail) => {
