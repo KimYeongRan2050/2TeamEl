@@ -11,7 +11,6 @@ export default function MainPage() {
   const [maxRange, setMaxRange] = useState("");
   const [difficulty, setDifficulty] = useState("");
   const [searched, setSearched] = useState(false);
-  const [showMap, setShowMap] = useState(false);
   const [lat, setLat] = useState(null);
   const [lon, setLon] = useState(null);
   const [selectedTrail, setSelectedTrail] = useState(null);
@@ -56,7 +55,7 @@ export default function MainPage() {
     if (trailsLoading === false && searched === true) {
       setSearched(false);
     }
-  }, [trailsLoading, searched, showMap]);
+  }, [trailsLoading, searched]);
 
   // 키워드 입력 시 검색 초기화
   useEffect(() => {
@@ -68,8 +67,7 @@ export default function MainPage() {
       return;
     }
     setSearched(true);
-    setShowMap(true);
-  }
+    }
 
   function clearSelection() {
     setSelectedTrail(null);
@@ -100,21 +98,20 @@ export default function MainPage() {
           zoom: zoom,
         }}
       >
-        {showMap && (
-          <HikingMap
-            keyword={keyword}
-            searched={searched}
-            trailData={trailData}
-            selectedTrail={selectedTrail}
-            setSelectedTrail={setSelectedTrail}
-            onCenterChanged={(lat, lon) => {
-              setLat(lat);
-              setLon(lon);
-            }}
-            onClearSelection={clearSelection}
-            style={{ width: 600, height: "100%" }}
-          />
-        )}
+        <HikingMap
+          keyword={keyword}
+          searched={searched}
+          trailData={trailData}
+          selectedTrail={selectedTrail}
+          setSelectedTrail={setSelectedTrail}
+          onCenterChanged={(lat, lon) => {
+            setLat(lat);
+            setLon(lon);
+          }}
+          onClearSelection={clearSelection}
+          style={{ width: 600, height: "100%" }}
+        />
+   
 
         {!trailsLoading && !trailsError && (
           <TrailList

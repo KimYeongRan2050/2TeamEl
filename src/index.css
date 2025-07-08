@@ -1,5 +1,6 @@
 * {
   box-sizing: border-box;
+  font-family: 'Malgun Gothic', sans-serif;
 }
 html,
 body,
@@ -7,18 +8,37 @@ body,
   margin: 0;
   padding: 0 10px;
   box-sizing: border-box;
-  /* width: 100vw; */
   height: 100vh;
 }
 input{
-  padding: 5px;
+  padding: 0;
   font-size: 16px;
   border: 2px solid #2cc532;
+  border-radius: 0; /* 둥근 테두리 제거 */
+  outline: none; /* 포커스 아웃라인 제거 */
+  /* 필요한 추가 스타일 적용 */  
+}
+input::placeholder{
+  color: #757575;
+  font-size: 20px;
+}
+input:focus{
+  border-radius: 0;
+}
+input:focus-visible{
+  outline-color: #2cc532;
 }
 select{
-  width: 120px;
-  padding: 5px;
+  padding: 0;
   border: 2px solid #2cc532;
+  color: #757575;
+  font-size: 20px;  
+  border-radius: 0; /* 둥근 테두리 제거 */
+  outline: none; /* 포커스 아웃라인 제거 */
+  /* 필요한 추가 스타일 적용 */  
+}
+select:focus-visible{
+  outline-color: #2cc532;
 }
 .hidden {
   display: none;
@@ -26,34 +46,29 @@ select{
 .right{
   float: right;
 }
-
 /* 공통 css */
-
 #searchResults {
   display: flex;
 }
-
 #hikingMap {
   width: 600px;
   height: 600px;
   flex-shrink: 0;
+  border: 1px solid #ccc;
+  border-radius: 10px;
 }
-
 .trailList {
   flex-grow: 1;
-  max-height: 800px;
+  max-height: 600px;
   overflow-y: auto;
   margin-left: 20px;
 }
-
-
 .title{
   text-align: center;
 }
 .main-container{
   margin: 10px 20px;
 }
-
 .search-section{
   background: #fbfbfb;
   padding: 50px;
@@ -65,43 +80,45 @@ select{
   display: inline-block;
 }
 .search-bar{
-  display: flex;
-  align-items: center;
+  display:inline-block;
+  position: relative;
+  width: 100%;
   margin-bottom: 10px;
 }
 .search-bar span,
 .range-section span,
-.difficulty-section span{
-  display: flex;
-  justify-content: space-between;  
+.difficulty-section span{  
+  display:inline-block;
   width: 100px;
   font-size: 20px;
+  position: relative;
 }
 .search-bar span::after,
 .range-section span::after,
 .difficulty-section span::after{
   content: ':';
   display: inline-block;
-
+  position: absolute;
+  right: 0;
 }
-
 .search-bar input{
   display: inline-block;
-  width: calc(100% - 240px);
+  width: calc(100% - 220px);
   height: 46px;
   font-size: 22px;
   padding: 0 10px;
-  margin: 0 20px;
+  margin-left: 20px;
 }
 .search-bar button{
   width: 100px;
-  padding: 10px 0;
+  height: 46px;
+  padding: 2px 0;
   background-color: #2cc532;
-  border: 1px solid #237447;
+  border: 1px solid #2cc532;
   font-size: 16px;
-  color: #fff;    
+  color: #fff;
+  position: absolute;
 }
-
 .searchBtn{
   width: 100px;
   height: 50px;
@@ -116,66 +133,69 @@ select{
   flex-direction: column;
   gap: 10px;
 }
-
-
 .range-section{
-  display: flex;
-  align-items: center;
+  display: inline-block;
+  width: 100%;
 }
-
 .range-section input{
   display: inline-block;
-  width: calc(100% / 2 - 64px);
+  width: calc(100% / 2 - 65px);
   height: 46px;
   font-size: 22px;
   padding: 0 10px;
   margin: 0 10px 0 20px;
 }
-
 .range-section input:last-child{
   margin: 0 !important;
 }
-
 .difficulty-section{
-  display: flex;
-  align-items: center;
+  display: inline-block;
+  width: 100%;
 }
-
 .difficulty-section select{
-  width: calc(100% - 116px);
+  width: calc(100% - 120px);
   height: 46px;
-  padding: 0 10px;
+  padding: 0 7px;
   margin-left: 20px;
   font-size: 20px;
+  color: #757575;
+  font-weight: 400;
 }
 .mapList{
   margin-top: 20px;
 }
-
 .listAttribute{
   text-align: right;
   margin-bottom: 20px;
 }
-
+.listAttribute select{
+  width: 200px;
+  height: 46px;
+  padding: 0 10px;
+  border: 2px solid #2cc532;
+  font-size: 22px;
+}
 .trail-overlay{
-  padding: 10px;
+  padding: 16px !important;
   background: #fff;
   border: 1px solid #d1d1d1;
   border-radius: 5px;
   position: relative;
   margin-bottom: 10px;
-
+  box-shadow: 5px 5px 10px 0px #6b6b6b;
 }
 .trail-overlay::after{
   content: '▼';
-  display: block;
+  display: inline-block;
   margin: 10px 0;
+  color: #fff;
   position: absolute;
   left: 50%;
-  top: 27px;
+  top: 26px;
   transform: translate(-50%, 0);
+  z-index: 1;
+  font-size: 24px;
 }
-
 .mpaListItem{            
   padding: 14px 20px;
   font-weight: bold;
@@ -186,7 +206,73 @@ select{
 }
 .trailCard{
   padding: 20px 10px;
-  margin-bottom: 8px;
   cursor: pointer;
   border-radius: 10px;
-}            
+}
+.trailCard div{
+  margin-bottom: 5px;
+}
+@media only screen and (max-width:1000px){
+  #root{
+    overflow-y: hidden;
+  }
+  .search-section{
+    padding: 20px;
+  }
+  .search-bar span,
+  .range-section span, 
+  .difficulty-section span{
+    width: 70px;
+    font-size: 1rem;    
+  }
+  .search-bar input{
+    width: calc(100% - 150px) !important;
+    height: auto !important;
+    line-height: 18px;   
+    font-size: 1rem;
+    padding: 4px 10px;
+    margin-left: 10px;
+  }
+  .search-bar button{
+    width: 70px;
+    height: auto;
+    padding: 2px 0;
+    line-height: 24px;
+    font-size: 1rem;
+  }
+  input::placeholder{
+    color: #757575; 
+    font-size: 1rem;
+  }  
+  .range-section input{
+    display: inline-block;
+    width: calc(100% / 2 - 45px);
+    height: auto !important;
+    font-size: 1rem;
+    padding: 4px 10px;
+    margin-left:10px;
+  }
+  .difficulty-section select{
+    width: calc(100% - 80px);
+    height: auto !important;
+    font-size: 1rem;
+    padding: 4px 6px;
+    margin-left: 10px;
+  }
+  #searchResults{
+    display: block !important;
+  }
+  #hikingMap{
+    width: 100%;
+  }
+  #hikingMap::after{
+    content: '';
+    clear: both;
+    display: block;
+  }
+  .trailList{
+    width: 100%;
+    margin-top: 20px;
+    margin-left: 0;
+  }
+}

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import TrailCard from "./TrailCard";
 
 function TrailList(props) {
@@ -9,6 +9,35 @@ function TrailList(props) {
     setExpandedMountain(null);
   }, [props.collapseAllTrigger]);
 
+  useEffect(() => {
+    if (props.selectedTrail) {
+      const mountain = props.selectedTrail.properties.mntn_nm;
+      setExpandedMountain(mountain);
+    }
+  }, [props.selectedTrail]);
+ 
+  const cardRefs = useRef({});
+  useEffect(() => {
+    if (props.selectedTrail) {
+      const mountain = props.selectedTrail.properties.mntn_nm;
+      setExpandedMountain(mountain);
+
+      setTimeout(() => {
+        const ref = cardRefs.current[props.selectedTrail.id];
+        if (ref && ref.current) {
+          ref.current.scrollIntoView({
+            behavior: "smooth",
+            block: "center"
+          });
+        }
+      }, 100); // 렌더링 후 DOM이 보장될 수 있도록 약간 딜레이
+    }
+  }, [props.selectedTrail]);
+
+
+  
+    
+  
   if (!Array.isArray(props.trailData)) {
     return null;
   }
@@ -64,9 +93,6 @@ function TrailList(props) {
     }, 0).toFixed(2); // 소수점 2자리
   }
 
-
-
-
   return (
     <div className="trailList">
       {sortedMountainNames.length > 0 && (
@@ -91,7 +117,7 @@ function TrailList(props) {
                 className="mpaListItem"
                 onClick={() => toggleMountain(name)}
               >
-                {name} ({getTotalDistance(trails)} Km) {isExpanded ? (
+                {name} (총 거리 : {getTotalDistance(trails)} Km) {isExpanded ? (
                   <div className="right up">▲</div>
                 ) : (
                   <div className="right down">▼</div>
@@ -100,20 +126,23 @@ function TrailList(props) {
               {isExpanded && (
                 <div
                   style={{
-                    padding: "16px",
-                    marginTop: "8px",
+                    marginTop: "20px",
                     display: "grid",
-                    gridTemplateColumns: "repeat(auto-fill, minmax(114px, 1fr))",
-                    gap: "10px",
+                    gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))",
+                    gap: "20px",
                   }}
                 >
                   {trails.map((trail) => {
+                    if (!cardRefs.current[trail.id]) {
+                      cardRefs.current[trail.id] = React.createRef();
+                    }
                     return (
                       <TrailCard
                         key={trail.id}
                         trail={trail}
                         selectedTrail={props.selectedTrail}
                         setSelectedTrail={props.setSelectedTrail}
+                        ref={cardRefs.current[trail.id]}
                       />
                     );
                   })}
